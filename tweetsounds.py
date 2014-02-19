@@ -34,5 +34,5 @@ def stream():
 	return Response(event_stream(), mimetype="text/event-stream")
 
 if __name__ == '__main__':
-	app.debug = True
-	app.run(threaded=True)
+	# app.debug = True
+	app.run()

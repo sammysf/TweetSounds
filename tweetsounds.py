@@ -1,6 +1,7 @@
 from flask import Flask, request, session, g, redirect, url_for, \
 	abort, render_template, flash, Response
 from TwitterAPI import TwitterAPI
+import json
 
 # gunicorn -k 'gevent' tweetsounds:app
 # sudo ARCHFLAGS='-arch i386 -arch x86_64' pip install gevent
@@ -15,8 +16,15 @@ r = None
 def event_stream():
 	if not r is None:
 		for item in r.get_iterator():
-			print item['text']
-			yield "data: %s\n\n" % item['user']['screen_name']
+			# print item['text']
+			# retweeted = 'retweeted_status' in item
+			# message = json.dumps({ \
+			# 						"screen_name": item['user']['screen_name'], \
+			# 						"text": item['text'], \
+			# 						"retweet": retweeted \
+			# 					 })
+			# yield 'data: ' + message + '\n\n'
+			yield 'data: ' + json.dumps(item) + '\n\n'
 
 @app.route('/')
 def index():
